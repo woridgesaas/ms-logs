@@ -1,0 +1,5 @@
+{"user": "Zakariyae Haourir", "action": "LOGIN", "status": "SUCCESS"}
+{"user": "Fatima Zahra", "action": "LOGOUT", "status": "SUCCESS"}
+{"user": "Youssef", "action": "UPDATE_PROFILE", "status": "FAILED"}
+{"user": "Imane", "action": "DELETE_ACCOUNT", "status": "SUCCESS"}
+{"user": "Karim", "action": "RESET_PASSWORD", "status": "SUCCESS"}

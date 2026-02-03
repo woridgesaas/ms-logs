@@ -1,0 +1,36 @@
+services:
+  woridge.ms-logs.loki:
+    image: grafana/loki:latest
+    container_name: woridge-loki
+    user: "0:0"
+    volumes:
+      - ./config/loki-config.yaml:/etc/loki/local-config.yaml
+      - loki_data:/tmp/loki
+    ports:
+      - "3100:3100"
+    networks:
+      - woridge-external-network
+    restart: unless-stopped
+  
+  woridge.ms-logs.promtail:
+    image: grafana/promtail:latest
+    container_name: woridge-promtail
+    volumes:
+      - ./config/promtail-config.yaml:/etc/promtail/config.yml
+      # Named Volume
+      - ms-auth_logs:/var/log/auth:ro
+    networks:
+      - woridge-external-network
+    depends_on:
+      - woridge.ms-logs.loki
+    restart: unless-stopped
+    
+networks:
+  woridge-external-network:
+    external: true
+
+volumes:
+  loki_data:
+  ms-auth_logs:
+    external: true
+    name: ms-auth_logs

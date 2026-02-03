@@ -1,0 +1,21 @@
+server:
+  http_listen_port: 9080
+
+clients:
+  - url: http://woridge.ms-logs.loki:3100/loki/api/v1/push
+
+scrape_configs:
+  - job_name: system_audits
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: system_audits
+          env: development
+          __path__: /var/log/**/*_audit.json
+          
+
+    relabel_configs:
+      - source_labels: [__path__]
+        target_label: service
+        regex: "^/var/log/([^/]+)/.*"
