@@ -20,6 +20,7 @@ services:
       # Named Volume
       - ms-auth_logs:/var/logs/auth:ro
       - ms-planification-entretiens_logs:/var/logs/Rh-extern/planification:ro
+      - ms-gestion-offre_logs:/var/logs/Rh-extern/offres:ro
     networks:
       - woridge-external-network
     depends_on:
@@ -38,3 +39,6 @@ volumes:
   ms-planification-entretiens_logs:
     external: true
     name: ms-planification-entretiens_logs
+  ms-gestion-offre_logs:
+    external: true      
+    name: ms-gestion-offre_logs
