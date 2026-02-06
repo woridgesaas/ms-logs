@@ -21,6 +21,7 @@ services:
       - ms-auth_logs:/var/logs/auth:ro
       - ms-planification-entretiens_logs:/var/logs/Rh-extern/planification:ro
       - ms-gestion-offre_logs:/var/logs/Rh-extern/offres:ro
+      - ms-canal-diffusion_logs:/var/logs/Rh-extern/diffusionCanal:ro
     networks:
       - woridge-external-network
     depends_on:
@@ -36,9 +37,15 @@ volumes:
   ms-auth_logs:
     external: true
     name: ms-auth_logs
+    
   ms-planification-entretiens_logs:
     external: true
     name: ms-planification-entretiens_logs
+
   ms-gestion-offre_logs:
     external: true      
     name: ms-gestion-offre_logs
+
+  ms-canal-diffusion_logs:
+    external: true
+    name: ms-canal-diffusion_logs
