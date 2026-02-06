@@ -10,7 +10,7 @@ services:
       - "3100:3100"
     networks:
       - woridge-external-network
-    restart: unless-stopped
+    restart: always
   
   woridge.ms-logs.promtail:
     image: grafana/promtail:latest
@@ -18,12 +18,13 @@ services:
     volumes:
       - ./config/promtail-config.yaml:/etc/promtail/config.yml
       # Named Volume
-      - ms-auth_logs:/var/log/auth:ro
+      - ms-auth_logs:/var/logs/auth:ro
+      - ms-planification-entretiens_logs:/var/logs/Rh-extern/planification:ro
     networks:
       - woridge-external-network
     depends_on:
       - woridge.ms-logs.loki
-    restart: unless-stopped
+    restart: always
     
 networks:
   woridge-external-network:
@@ -34,3 +35,6 @@ volumes:
   ms-auth_logs:
     external: true
     name: ms-auth_logs
+  ms-planification-entretiens_logs:
+    external: true
+    name: ms-planification-entretiens_logs
