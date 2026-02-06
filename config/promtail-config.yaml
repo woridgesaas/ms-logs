@@ -12,10 +12,10 @@ scrape_configs:
         labels:
           job: system_audits
           env: development
-          __path__: /var/log/**/*_audit.json
+          __path__: /var/logs/**/*_audit.json
           
 
     relabel_configs:
       - source_labels: [__path__]
         target_label: service
-        regex: "^/var/log/([^/]+)/.*"
+        regex: "^/var/logs/([^/]+)/.*"
