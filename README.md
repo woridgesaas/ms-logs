@@ -29,6 +29,7 @@ volumes:
 ```
 
 ### 2.Querying Logs exemple(LogQL)
+```http://localhost:3100/loki/api/v1/query_range?query={job="system_audits"}```
 
 | Requirement | LogQL Query |
 |-------------|-------------|
