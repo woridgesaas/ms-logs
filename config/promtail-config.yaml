@@ -1,6 +1,6 @@
 server:
   http_listen_port: 9080
-
+#send to
 clients:
   - url: http://woridge.ms-logs.loki:3100/loki/api/v1/push
 
@@ -12,10 +12,10 @@ scrape_configs:
         labels:
           job: system_audits
           env: development
-          __path__: /var/logs/**/*_audit.json
+          __path__: /var/logs/audits/*/*_audit.json
           
-
+    #put the name of folder between audits and / in service label :)
     relabel_configs:
       - source_labels: [__path__]
         target_label: service
-        regex: "^/var/logs/([^/]+)/.*"
+        regex: "/var/logs/audits/(.+)/.+"
