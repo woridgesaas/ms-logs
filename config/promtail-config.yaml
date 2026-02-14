@@ -12,10 +12,10 @@ scrape_configs:
         labels:
           job: system_audits
           env: development
-          __path__: /var/logs/audits/*/*_audit.json
+          __path__: /var/logs/audits/**/*audit*.json
           
     #put the name of folder between audits and / in service label :)
     relabel_configs:
       - source_labels: [__path__]
         target_label: service
-        regex: "/var/logs/audits/(.+)/.+"
+        regex: "/var/logs/audits/([^/]+)/.*"
