@@ -23,7 +23,7 @@ services:
       - ms-gestion-offre_logs:/var/logs/audits/Rh-extern/offres:ro
       - ms-canal-diffusion_logs:/var/logs/audits/Rh-extern/diffusionCanal:ro
       - ms-filtrage-ia_logs:/var/logs/audits/Rh-extern/filtrage
-      - ms-conge_logs:/var/logs/audits/Rh-intern/leaves
+      - ms-internal-user_logs:/var/logs/audits/Rh-intern/internalUser
     networks:
       - woridge-external-network
     depends_on:
@@ -56,6 +56,6 @@ volumes:
     external: true
     name: ms-filtrage-ia_logs
 
-  ms-conge_logs:
-    #external: true
-    name: ms-conge_logs
+  ms-internal-user_logs:
+    external: true
+    name: ms-internal-user_logs
