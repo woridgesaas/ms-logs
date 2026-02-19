@@ -30,12 +30,27 @@ services:
       - woridge.ms-logs.loki
     restart: always
     
+  woridge.ms-logs.grafana:
+    image: grafana/grafana:latest
+    container_name: woridge-grafana
+    ports:
+      - "3000:3000"
+    networks:
+      - woridge-external-network
+    depends_on:
+      - woridge.ms-logs.loki
+    volumes:
+      - grafana_data:/var/lib/grafana
+    restart: always
+
 networks:
   woridge-external-network:
     external: true
 
 volumes:
   loki_data:
+  grafana_data:
+
   ms-auth_logs:
     external: true
     name: ms-auth_logs
