@@ -1,40 +1,59 @@
-# Woridge Centralized Logging System
+# Woridge Centralized Logging System (PLG Stack)
 
-This service centralizes audits from all microservices using Loki and Promtail.
+This service centralizes two types of logs for all microservices:
 
-## 🚀 How it Works
+- **System Audits**: Business actions for users (e.g., invoice modification).
+- **Dev Logs**: Technical traces for debugging (errors, requests, performance).
 
-1. Microservices write audit logs into a shared Named Volume
-2. Promtail scans the volume and pushes logs to Loki
-3. Loki indexes the data for querying
+---
 
-## 🛠️ Integration Guide for Microservices
+##  How it Works
 
-Every microservice (Auth, Conge, etc.) must implement the following:
+- **Microservices**: Write JSON files into a shared Named Volume.
+- **Promtail**: Scans the `/audit` and `/dev` folders inside these volumes.
+- **Loki**: Indexes data with labels (service, level, job).
+- **Grafana**: Visualization interface to query logs.
 
-### 1. Docker Configuration
+---
 
-Map your internal log folder to the shared external volume in `docker-compose.yml`:
+## Integration Guide for Microservices
+
+### 1. Folder Structure
+Each microservice must organize its logs into two subfolders inside its volume:
+
+- `/app/logs/audit/` : Files named `*_audit*.json`
+- `/app/logs/dev/` : Files named `*_dev*.json` 
+
+### 2. Docker Configuration
+Map your internal log folder to the shared named volume in your `docker-compose.yml`:
 
 ```yaml
 services:
   your-service-name:
     volumes:
-      - auth_logs:/app/logs # Map internal path to the shared volume
+      - ms-your-service_logs:/app/logs
 
 volumes:
-  auth_logs:
+  ms-your-service_logs:
     external: true
-    name: auth_logs # Must match the volume name in ms-logs
+    name: ms-your-service_logs # Must match the name in the ms-logs service
 ```
 
-### 2.Querying Logs exemple(LogQL)
-```http://localhost:3100/loki/api/v1/query_range?query={job="system_audits"}```
+## How to Access & Query Logs
+### 1. Connect to Grafana
+Access the interface: 
+```http://localhost:3000 ```
 
-| Requirement | LogQL Query |
-|-------------|-------------|
-| All Logs | `{job="system_audits"}` |
-| Parse Fields | `{job="system_audits"} \| json` |
-| By User | `{job="system_audits"} \| json \| user="Zakariyae"` |
-| By Action | `{job="system_audits"} \| json \| action="LOGIN"` |
-| By Status | `{job="system_audits"} \| json \| status="FAILED"` |
+Default login: 
+```admin / admin.```
+### 2. Configure Loki Connection
+- Go to Configuration (Gear icon) > **Data Sources.**
+- Click Add data source and choose **Loki.**
+- In URL, enter the internal Docker address: 
+```http://woridge.ms-logs.loki:3100.```
+- Click Save & Test.
+
+### 3. Explore Logs (LogQL)
+Go to the Explore (Compass icon) tab and use label selectors:
+- For Debugging (Dev):
+``` {job="system_dev_logs", service="auth", level="Error"}```

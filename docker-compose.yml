@@ -17,13 +17,23 @@ services:
     container_name: woridge-promtail
     volumes:
       - ./config/promtail-config.yaml:/etc/promtail/config.yml
-      # Named Volume
+      # Named Volume for Audits
       - ms-auth_logs:/var/logs/audits/auth:ro
       - ms-planification-entretiens_logs:/var/logs/audits/Rh-extern/planification:ro
       - ms-gestion-offre_logs:/var/logs/audits/Rh-extern/offres:ro
       - ms-canal-diffusion_logs:/var/logs/audits/Rh-extern/diffusionCanal:ro
       - ms-filtrage-ia_logs:/var/logs/audits/Rh-extern/filtrage
       - ms-internal-user_logs:/var/logs/audits/Rh-intern/internalUser
+
+      # Named Volume for dev
+      - ms-auth_logs:/var/logs/dev/auth:ro
+      - ms-planification-entretiens_logs:/var/logs/dev/Rh-extern/planification:ro
+      - ms-gestion-offre_logs:/var/logs/dev/Rh-extern/offres:ro
+      - ms-canal-diffusion_logs:/var/logs/dev/Rh-extern/diffusionCanal:ro
+      - ms-filtrage-ia_logs:/var/logs/dev/Rh-extern/filtrage:ro
+      - ms-internal-user_logs:/var/logs/dev/Rh-intern/internalUser:ro
+      - ms-internal-user_logs:/var/logs/dev/Rh-intern/internalUser:ro
+
     networks:
       - woridge-external-network
     depends_on:

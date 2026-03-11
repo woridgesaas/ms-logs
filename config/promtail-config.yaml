@@ -19,3 +19,36 @@ scrape_configs:
       - source_labels: [__path__]
         target_label: service
         regex: "/var/logs/audits/([^/]+)/.*"
+
+  
+  - job_name: system_dev_logs
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: system_dev_logs
+          env: development
+          __path__: /var/logs/dev/**/*dev*.json
+
+    pipeline_stages:
+      - json:
+          expressions:
+            level: Level
+            message: MessageTemplate
+            request_path: Properties.RequestPath
+            endpoint: Properties.EndpointName
+            request_id: Properties.RequestId
+
+      - labels:
+          level:
+          request_path:
+          endpoint:
+      #Dont send those type of lignes
+      - drop:
+          expression: ".*Health checks.*"
+
+    relabel_configs:
+      # Extract name of service and put it in servcie label
+      - source_labels: [__path__]
+        target_label: service
+        regex: "/var/logs/dev/([^/]+)/.*"
