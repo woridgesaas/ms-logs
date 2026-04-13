@@ -1,5 +1,3 @@
-{"user": "Zakariyae Haourir", "action": "LOGIN", "status": "SUCCESS"}
-{"user": "Fatima Zahra", "action": "LOGOUT", "status": "SUCCESS"}
-{"user": "Youssef", "action": "UPDATE_PROFILE", "status": "FAILED"}
-{"user": "Imane", "action": "DELETE_ACCOUNT", "status": "SUCCESS"}
-{"user": "Karim", "action": "RESET_PASSWORD", "status": "SUCCESS"}
+{"LogType":"Audit","TenantId":"client-alpha","UserMatricule":"ZH1234","UserRole":"Admin","Action":"CONTRACT_SIGNED","TargetId":"Administratif-Documents","Status":"Success"}
+{"LogType":"Audit","TenantId":"client-alpha","UserMatricule":"ZH1234","UserRole":"Admin","Action":"USER_CREATED","TargetId":"HR-System","Status":"Success"}
+{"LogType":"Audit","TenantId":"client-alpha","UserMatricule":"ZH8888","UserRole":"Manager","Action":"DOCUMENT_DELETED","TargetId":"Finance-Archive","Status":"Failed"}

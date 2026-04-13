@@ -10,6 +10,7 @@ services:
       - "3100:3100"
     networks:
       - woridge-external-network
+      - woridge-logs-network
     restart: always
   
   woridge.ms-logs.promtail:
@@ -18,7 +19,7 @@ services:
     volumes:
       - ./config/promtail-config.yaml:/etc/promtail/config.yml
       # Named Volume for Audits
-      - ms-auth_logs:/var/logs/audits/auth:ro
+      - ms-auth_logs:/var/logs/audits/auth
       - ms-planification-entretiens_logs:/var/logs/audits/Rh-extern/planification:ro
       - ms-gestion-offre_logs:/var/logs/audits/Rh-extern/offres:ro
       - ms-canal-diffusion_logs:/var/logs/audits/Rh-extern/diffusionCanal:ro
@@ -56,6 +57,8 @@ services:
     
 networks:
   woridge-external-network:
+    external: true
+  woridge-logs-network:
     external: true
 
 volumes:
